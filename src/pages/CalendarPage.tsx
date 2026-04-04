@@ -1,16 +1,17 @@
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Clock, MapPin, Users, Edit3 } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock, MapPin, Users, Edit3, Briefcase, Gift, UserCheck, GraduationCap, Presentation, Handshake } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 const days = ["อา", "จ", "อ", "พ", "พฤ", "ศ", "ส"];
 const eventDays = [5, 12, 15, 18, 22, 28];
 
-const events = [
-  { d: 5, t: "ประชุมทีม", ti: "09:00", color: "#6366f1" },
-  { d: 12, t: "งานส่งมอบโปรเจกต์", ti: "14:00", color: "#3b82f6" },
-  { d: 15, t: "วันเกิดของคุณ", ti: "ทั้งวัน", color: "#ec4899" },
-  { d: 18, t: "นัดกับลูกค้า", ti: "10:30", color: "#f59e0b" },
-  { d: 22, t: "สัมมนา", ti: "13:00", color: "#10b981" },
-  { d: 28, t: "ปิดสำเร็จการศึกษา", ti: "16:00", color: "#8b5cf6" },
+const events: { d: number; t: string; ti: string; icon: LucideIcon; colorClass: string; bgClass: string }[] = [
+  { d: 5, t: "ประชุมทีม", ti: "09:00", icon: Briefcase, colorClass: "text-indigo-500", bgClass: "bg-indigo-500" },
+  { d: 12, t: "งานส่งมอบโปรเจกต์", ti: "14:00", icon: Presentation, colorClass: "text-blue-500", bgClass: "bg-blue-500" },
+  { d: 15, t: "วันเกิดของคุณ", ti: "ทั้งวัน", icon: Gift, colorClass: "text-pink-500", bgClass: "bg-pink-500" },
+  { d: 18, t: "นัดกับลูกค้า", ti: "10:30", icon: Handshake, colorClass: "text-amber-500", bgClass: "bg-amber-500" },
+  { d: 22, t: "สัมมนา", ti: "13:00", icon: UserCheck, colorClass: "text-emerald-500", bgClass: "bg-emerald-500" },
+  { d: 28, t: "ปิดสำเร็จการศึกษา", ti: "16:00", icon: GraduationCap, colorClass: "text-violet-500", bgClass: "bg-violet-500" },
 ];
 
 const eventDetails: Record<number, { title: string; time: string; desc: string; location: string; attendees: string }> = {
@@ -80,18 +81,23 @@ const CalendarPage = () => {
           </div>
           <h4 className="font-bold text-lg mb-4">กิจกรรมที่กำลังจะมา</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {events.map((e) => (
-              <button key={e.d} onClick={() => openDetail(e.d)} className="info-card rounded-2xl p-5 text-left hover:-translate-y-1 transition-all group">
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-xl flex-shrink-0 flex items-center justify-center font-bold text-lg" style={{ background: e.color, color: "white" }}>{e.d}</div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-bold text-sm">{e.t}</p>
-                    <p className="text-xs mt-1 text-muted">{e.ti}</p>
+            {events.map((e) => {
+              const Icon = e.icon;
+              return (
+                <button key={e.d} onClick={() => openDetail(e.d)} className="info-card rounded-2xl p-5 text-left hover:-translate-y-1 transition-all group">
+                  <div className="flex items-start gap-4">
+                    <div className={`w-14 h-14 rounded-xl flex-shrink-0 flex items-center justify-center ${e.bgClass} text-accent-foreground`}>
+                      <Icon className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-sm">{e.t}</p>
+                      <p className="text-xs mt-1 text-muted">{e.ti}</p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-muted opacity-0 group-hover:opacity-100 transition flex-shrink-0" />
                   </div>
-                  <ArrowRight className="w-4 h-4 text-muted opacity-0 group-hover:opacity-100 transition flex-shrink-0" />
-                </div>
-              </button>
-            ))}
+                </button>
+              );
+            })}
           </div>
         </div>
       ) : detail ? (

@@ -1,7 +1,9 @@
+
 import { HashRouter, Route, Routes, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import Layout from "@/components/Layout";
+import LandingPage from "@/pages/LandingPage";
 import LoginPage from "@/pages/LoginPage";
 import HomePage from "@/pages/HomePage";
 import AppStorePage from "@/pages/AppStorePage";
@@ -11,14 +13,12 @@ import SettingsPage from "@/pages/SettingsPage";
 import NotFound from "@/pages/NotFound";
 
 const AppRoutes = () => {
-  const { user } = useAuth();
-
-  if (!user) return <LoginPage />;
-
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/analytics" element={<AppStorePage />} />
         <Route path="/messages" element={<MessagesPage />} />
         <Route path="/calendar" element={<CalendarPage />} />
@@ -32,7 +32,7 @@ const AppRoutes = () => {
 const App = () => (
   <ThemeProvider>
     <AuthProvider>
-      <HashRouter>
+      <HashRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <AppRoutes />
       </HashRouter>
     </AuthProvider>

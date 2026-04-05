@@ -153,7 +153,14 @@ const AppStorePage = () => {
               <p className="text-sm text-muted mb-3">{detailApp.dev}</p>
               <div className="mb-4"><StarRating /></div>
               <button
-                onClick={() => { installed ? (setOpenedApp(detailApp), setDetailApp(null)) : installApp(detailApp); }}
+                onClick={() => {
+                  if (installed) {
+                    setOpenedApp(detailApp);
+                    setDetailApp(null);
+                  } else {
+                    installApp(detailApp);
+                  }
+                }}
                 className="px-6 py-2.5 rounded-xl font-semibold text-sm bg-accent text-accent-foreground hover:opacity-90 flex items-center gap-2"
               >
                 {installed ? <><Play className="w-4 h-4" /> เปิดแอป</> : <><Download className="w-4 h-4" /> ติดตั้ง</>}

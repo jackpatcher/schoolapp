@@ -19,6 +19,11 @@ const Layout = () => {
   const currentNav = navItems.find((n) => n.id === currentPath);
   const pageTitle = currentNav?.label ?? "หน้าหลัก";
 
+  // ถ้าเป็นหน้า LandingPage (path '/') หรือหน้า LoginPage (path '/login') ให้ render เฉพาะ <Outlet />
+  if (currentPath === "/" || currentPath === "/login") {
+    return <Outlet />;
+  }
+
   return (
     <div className="h-screen w-full flex bg-background overflow-hidden">
       {/* Sidebar desktop */}

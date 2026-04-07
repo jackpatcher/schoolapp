@@ -1,14 +1,7 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Home, AppWindow, MessageCircle, CalendarDays, Settings, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-
-const navItems = [
-  { id: "/", icon: Home, label: "หน้าหลัก" },
-  { id: "/analytics", icon: AppWindow, label: "App Store", badge: 0 },
-  { id: "/messages", icon: MessageCircle, label: "ข้อความ", badge: 3 },
-  { id: "/calendar", icon: CalendarDays, label: "ปฏิทิน", badge: 0 },
-  { id: "/settings", icon: Settings, label: "ตั้งค่า", badge: 0 },
-];
+import { roleAppsPath } from "@/shared/models/roles";
 
 const Layout = () => {
   const { user, logout } = useAuth();
@@ -16,11 +9,19 @@ const Layout = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
+  const navItems = [
+    { id: "/", icon: Home, label: "หน้าหลัก" },
+    ...(user ? [{ id: roleAppsPath[user.role], icon: AppWindow, label: "App Store", badge: 0 }] : []),
+    { id: "/messages", icon: MessageCircle, label: "ข้อความ", badge: 3 },
+    { id: "/calendar", icon: CalendarDays, label: "ปฏิทิน", badge: 0 },
+    { id: "/settings", icon: Settings, label: "ตั้งค่า", badge: 0 },
+  ];
+
   const currentNav = navItems.find((n) => n.id === currentPath);
   const pageTitle = currentNav?.label ?? "หน้าหลัก";
 
-  // ถ้าเป็นหน้า LandingPage (path '/') หรือหน้า LoginPage (path '/login') ให้ render เฉพาะ <Outlet />
-  if (currentPath === "/" || currentPath === "/login") {
+  // ถ้าเป็นหน้า LandingPage หรือหน้า Login แบบใดก็ให้ render เฉพาะ <Outlet />
+  if (currentPath === "/" || currentPath === "/login" || currentPath.endsWith("/login")) {
     return <Outlet />;
   }
 
@@ -59,7 +60,7 @@ const Layout = () => {
               <p className="text-xs text-muted">{user?.role}@school.edu</p>
             </div>
           </div>
-          <button onClick={logout} className="w-full mt-3 px-4 py-2 rounded-xl text-sm font-semibold text-destructive hover:bg-destructive/10 transition flex items-center gap-2 justify-center">
+          <button onClick={() => { logout(); navigate("/"); }} className="w-full mt-3 px-4 py-2 rounded-xl text-sm font-semibold text-destructive hover:bg-destructive/10 transition flex items-center gap-2 justify-center">
             <LogOut className="w-4 h-4" /> Logout
           </button>
         </div>

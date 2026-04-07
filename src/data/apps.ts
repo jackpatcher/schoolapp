@@ -1,8 +1,9 @@
 import React from "react";
-import { LucideIcon, Music, Camera, MessageSquare, Map, Video, Send, Palette, Cloud, FileText, Film } from "lucide-react";
+import { LucideIcon, Music, FileText, Bell } from "lucide-react";
 
 export interface AppData {
   id: number;
+  slug: string;
   name: string;
   dev: string;
   icon: LucideIcon;
@@ -11,17 +12,47 @@ export interface AppData {
   features: string[];
   size: string;
   version: string;
+  roles: string[];
 }
 
 export const appsData: AppData[] = [
-  { id: 1, name: "Spotify", dev: "Spotify AB", icon: Music, iconColor: "text-green-500", desc: "แอปฟังเพลงออนไลน์ที่ใหญ่ที่สุด", features: ["ฟังเพลงนับล้านเพลง", "ทำรายการเพลงของตัวเอง", "ฟังเพลงแบบออฟไลน์"], size: "152 MB", version: "8.9.0" },
-  { id: 2, name: "Instagram", dev: "Meta Platforms", icon: Camera, iconColor: "text-pink-500", desc: "แชร์ภาพและวิดีโอกับเพื่อน", features: ["โพสต์ภาพ/วิดีโอ", "ตรวจสอบเรื่องราวของเพื่อน", "ถ่ายทำ Reels"], size: "203 MB", version: "342.0" },
-  { id: 3, name: "WhatsApp", dev: "Meta Platforms", icon: MessageSquare, iconColor: "text-green-600", desc: "แอปส่งข้อความและวิดีโอคอล", features: ["ส่งข้อความฉัน", "วิดีโอคอล HD", "ข้อความเสียง"], size: "98 MB", version: "24.1" },
-  { id: 4, name: "Google Maps", dev: "Google LLC", icon: Map, iconColor: "text-red-500", desc: "นำทางและสำรวจโลก", features: ["นำทาง GPS", "ค้นหาสถานที่", "ข้อมูลการจราจร"], size: "187 MB", version: "12.5" },
-  { id: 5, name: "YouTube", dev: "Google LLC", icon: Video, iconColor: "text-red-600", desc: "ดูวิดีโอจาก YouTube", features: ["ดูวิดีโอ 4K", "โหลดเพื่อดูออฟไลน์", "ไม่มีโฆษณา"], size: "178 MB", version: "19.24" },
-  { id: 6, name: "Telegram", dev: "Telegram Messenger LLP", icon: Send, iconColor: "text-blue-500", desc: "แอปแชทที่รวดเร็วและปลอดภัย", features: ["แชทไม่มีขีดจำกัด", "ไฟล์ขนาดใหญ่", "ลบข้อความ"], size: "142 MB", version: "10.12" },
-  { id: 7, name: "Canva", dev: "Canva Inc", icon: Palette, iconColor: "text-purple-500", desc: "ออกแบบกราฟิกอย่างง่ายดาย", features: ["แม่แบบการออกแบบ", "ตัวอักษรมากมาย", "ภาพ 1 ล้านภาพ"], size: "234 MB", version: "3.65" },
-  { id: 8, name: "Dropbox", dev: "Dropbox Inc", icon: Cloud, iconColor: "text-blue-600", desc: "บริการฝากเก็บไฟล์บนคลาวด์", features: ["ซิงค์ไฟล์อัตโนมัติ", "แชร์ไฟล์", "การทำงานร่วมกัน"], size: "156 MB", version: "12.4" },
-  { id: 9, name: "Notion", dev: "Notion Labs Inc", icon: FileText, iconColor: "text-gray-700", desc: "จดบันทึกและปรับปรุงข้อมูล", features: ["สร้างฐานข้อมูล", "วางแผนโครงการ", "ทำงานเป็นทีม"], size: "167 MB", version: "3.8" },
-  { id: 10, name: "Adobe Creative Cloud", dev: "Adobe Inc", icon: Film, iconColor: "text-red-500", desc: "แอปออกแบบและแก้ไขได้", features: ["แก้ไขรูปภาพ", "สร้างวิดีโอ", "ออกแบบกราฟิก"], size: "512 MB", version: "6.7" },
+  {
+    id: 1,
+    slug: "spotify",
+    name: "Spotify",
+    dev: "Spotify AB",
+    icon: Music,
+    iconColor: "text-green-500",
+    desc: "แอปฟังเพลงสำหรับนักเรียนและครู ใช้งานง่าย พร้อม playlist สำเร็จรูป",
+    features: ["ฟังเพลงนับล้านเพลง", "บันทึกเพลย์ลิสต์", "โหมดเรียนเงียบ"],
+    size: "152 MB",
+    version: "8.9.0",
+    roles: ["student", "teacher"],
+  },
+  {
+    id: 2,
+    slug: "homework",
+    name: "Homework",
+    dev: "School Labs",
+    icon: FileText,
+    iconColor: "text-blue-500",
+    desc: "จัดการบ้านและงานโรงเรียนสำหรับนักเรียนและครู พร้อมแจ้งเตือนครบทุกชั้นเรียน",
+    features: ["บันทึกงาน", "ตั้งกำหนดส่ง", "ติดตามสถานะ"],
+    size: "98 MB",
+    version: "2.4.1",
+    roles: ["student", "teacher"],
+  },
+  {
+    id: 3,
+    slug: "notice",
+    name: "Notice",
+    dev: "EduComm",
+    icon: Bell,
+    iconColor: "text-amber-500",
+    desc: "ระบบประกาศและแจ้งเตือนสำหรับครูและผู้บริหาร ให้ข่าวสารถึงผู้ปกครองทันที",
+    features: ["ประกาศข่าวด่วน", "แจ้งเตือนคลาส", "สรุปรายงาน"],
+    size: "64 MB",
+    version: "1.3.8",
+    roles: ["teacher", "admin"],
+  },
 ];

@@ -1,5 +1,5 @@
 git add .
-git commit -m "test"
+git commit -m "devlog"
 git push -u origin main
 
-ืnpm run dev
+ืnpm run

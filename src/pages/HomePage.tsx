@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { roleAppsPath } from "@/shared/models/roles";
 import { Users, TrendingUp, ShoppingCart, Sparkles, CheckCircle, Bell, Package, CalendarDays, ArrowRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -16,6 +18,8 @@ const stats: { icon: LucideIcon; label: string; value: string; colorClass: strin
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const appStorePath = user ? roleAppsPath[user.role] : "/";
 
   return (
     <div className="h-full flex flex-col">
@@ -60,7 +64,7 @@ const HomePage = () => {
           <div className="mb-8">
             <h3 className="font-bold text-lg mb-4">มาทำต่อไป</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <button onClick={() => navigate("/analytics")} className="info-card rounded-2xl p-6 text-left hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 border-l-4 border-l-accent">
+              <button onClick={() => navigate(appStorePath)} className="info-card rounded-2xl p-6 text-left hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 border-l-4 border-l-accent">
                 <Package className="w-5 h-5 text-muted mb-3" />
                 <h4 className="font-bold text-lg group-hover:text-accent transition">ดูแอปพลิเคชั่น</h4>
                 <p className="text-sm mt-2 text-muted">ค้นหาและติดตั้งแอปใหม่</p>

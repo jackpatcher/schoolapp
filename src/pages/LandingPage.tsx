@@ -26,7 +26,7 @@ const LandingPage = () => {
   }, [user, navigate]);
 
   const handleRoleClick = (roleKey: string) => {
-    navigate(`/login?role=${roleKey}`);
+    navigate(`/${roleKey}/login`);
   };
 
   const [showStaff, setShowStaff] = useState(false);

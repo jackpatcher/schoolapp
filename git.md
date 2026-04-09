@@ -1,5 +1,7 @@
 git add .
-git commit -m "homepage"
+git commit -m "gh page"
 git push -u origin main
 
-ืnpm run
+ืnpm run dev
+
+npm run deploy

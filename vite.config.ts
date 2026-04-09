@@ -25,8 +25,8 @@ export default defineConfig(({ mode }) => ({
         theme_color: "#6366f1",
         background_color: "#f8f9fb",
         display: "standalone",
-        start_url: "./",
-        scope: "./",
+        start_url: "/schoolapp/",
+        scope: "/schoolapp/",
         icons: [
           { src: "placeholder.svg", sizes: "192x192", type: "image/svg+xml" },
           { src: "placeholder.svg", sizes: "512x512", type: "image/svg+xml" },

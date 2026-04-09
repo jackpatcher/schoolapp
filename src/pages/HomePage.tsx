@@ -1,6 +1,7 @@
 
 
 import { useEffect, useState } from "react";
+import DevLogCards from "@/components/DevLogCards";
 import { GoogleLoginButton } from "@/components/GoogleLoginButton";
 import { APP_CONFIG } from "@/config";
 const { primary, secondary, accent, pale } = APP_CONFIG.schoolColors;
@@ -245,6 +246,14 @@ const HomePage = () => {
               </a>
             </div>
           ))}
+        </div>
+      </section>
+
+
+      {/* Dev Log Section */}
+      <section className="w-full relative flex flex-col justify-center items-center py-16 px-4 bg-white border-t border-border">
+        <div className="w-full max-w-4xl mx-auto">
+          <DevLogCards />
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 
 import React, { createContext, useContext, useState, useCallback } from "react";
 import { Role } from "@/shared/models/roles";
+export type { Role } from "@/shared/models/roles";
 import { demoUsers, DemoUser } from "@/shared/models/demoUsers";
 
 export interface User {

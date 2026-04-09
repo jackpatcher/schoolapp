@@ -1,5 +1,5 @@
 git add .
-git commit -m "devlog"
+git commit -m "homepage"
 git push -u origin main
 
 ืnpm run

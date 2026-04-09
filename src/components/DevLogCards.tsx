@@ -85,7 +85,7 @@ export default function DevLogCards() {
               <CarouselItem key={entry.date} className="pl-0 basis-full">
                 <div
                   className={cn(
-                    "w-full h-full rounded-3xl border border-border bg-card p-6 shadow-lg mx-auto flex flex-col justify-center"
+                    "w-full h-full rounded-3xl bg-card p-6 mx-auto flex flex-col justify-center"
                   )}
                 >
                   <div className="flex items-center mb-2">

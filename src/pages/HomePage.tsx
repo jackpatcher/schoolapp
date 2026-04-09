@@ -1,108 +1,66 @@
-import { useNavigate } from "react-router-dom";
+
+import { useState } from "react";
+import { GoogleLoginButton } from "@/components/GoogleLoginButton";
+import { APP_CONFIG } from "@/config";
 import { useAuth } from "@/contexts/AuthContext";
-import { roleAppsPath } from "@/shared/models/roles";
-import { Users, TrendingUp, ShoppingCart, Sparkles, CheckCircle, Bell, Package, CalendarDays, ArrowRight } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+// TODO: Replace with real Google login logic
 
-const recentActivity: { icon: LucideIcon; title: string; desc: string; time: string; colorClass: string; bgClass: string }[] = [
-  { icon: Sparkles, title: "สมัครสมาชิกใหม่ 5 คน", desc: "เพิ่มเข้าสู่ระบบแล้ว", time: "2 นาทีที่แล้ว", colorClass: "text-emerald-500", bgClass: "bg-emerald-500/10" },
-  { icon: CheckCircle, title: "ออเดอร์ #1042 สำเร็จ", desc: "จัดส่งเสร็จแล้ว", time: "15 นาทีที่แล้ว", colorClass: "text-blue-500", bgClass: "bg-blue-500/10" },
-  { icon: Bell, title: "รายงานประจำสัปดาห์พร้อม", desc: "เตรียมสำหรับอนุมัติ", time: "1 ชม.ที่แล้ว", colorClass: "text-amber-500", bgClass: "bg-amber-500/10" },
-];
-
-const stats: { icon: LucideIcon; label: string; value: string; colorClass: string; bgClass: string }[] = [
-  { icon: Users, label: "ผู้ใช้ทั้งหมด", value: "2,481", colorClass: "text-accent", bgClass: "bg-accent/10" },
-  { icon: TrendingUp, label: "รายได้", value: "฿84.2K", colorClass: "text-emerald-500", bgClass: "bg-emerald-500/10" },
-  { icon: ShoppingCart, label: "ออเดอร์", value: "364", colorClass: "text-blue-500", bgClass: "bg-blue-500/10" },
-];
 
 const HomePage = () => {
-  const navigate = useNavigate();
   const { user } = useAuth();
-  const appStorePath = user ? roleAppsPath[user.role] : "/";
+  const [loading, setLoading] = useState(false);
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    // TODO: Integrate real Google login here
+    setTimeout(() => {
+      setLoading(false);
+      alert("(Demo) Google Login Success!\nควรเชื่อมต่อระบบจริงที่นี่");
+    }, 1200);
+  };
+
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="relative overflow-hidden -mx-5 md:-mx-8 flex-1">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-purple-500/5 to-blue-500/5" />
-        <div className="blob blob-1" />
-        <div className="blob blob-2" />
-        <div className="blob blob-3" />
-
-        <div className="relative z-10 px-5 md:px-8 py-8 h-full overflow-auto">
-          {/* Welcome */}
-          <div className="mb-12">
-            <h2 className="text-5xl md:text-6xl font-bold mb-3 leading-tight">
-              <span className="bg-gradient-to-r from-accent to-purple-500 bg-clip-text text-transparent">
-                ยินดีต้อนรับ
-              </span>
-            </h2>
-            <p className="text-lg text-muted">มาเริ่มต้นวันที่ยอดเยี่ยมของคุณ</p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-8">
-              {stats.map((s) => {
-                const Icon = s.icon;
-                return (
-                  <div key={s.label} className="info-card rounded-2xl p-6 hover:scale-105 transition-transform duration-300 cursor-pointer group">
-                    <div className="flex items-center gap-4">
-                      <div className={`w-14 h-14 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform ${s.bgClass}`}>
-                        <Icon className={`w-7 h-7 ${s.colorClass}`} />
-                      </div>
-                      <div>
-                        <p className="text-xs text-muted">{s.label}</p>
-                        <p className="text-2xl font-bold mt-1">{s.value}</p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Action Cards */}
-          <div className="mb-8">
-            <h3 className="font-bold text-lg mb-4">มาทำต่อไป</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <button onClick={() => navigate(appStorePath)} className="info-card rounded-2xl p-6 text-left hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 border-l-4 border-l-accent">
-                <Package className="w-5 h-5 text-muted mb-3" />
-                <h4 className="font-bold text-lg group-hover:text-accent transition">ดูแอปพลิเคชั่น</h4>
-                <p className="text-sm mt-2 text-muted">ค้นหาและติดตั้งแอปใหม่</p>
-              </button>
-              <button onClick={() => navigate("/calendar")} className="info-card rounded-2xl p-6 text-left hover:shadow-xl transition-all duration-300 group hover:-translate-y-1 border-l-4 border-l-success">
-                <CalendarDays className="w-5 h-5 text-muted mb-3" />
-                <h4 className="font-bold text-lg group-hover:text-success transition">ดูปฏิทิน</h4>
-                <p className="text-sm mt-2 text-muted">ตรวจสอบกิจกรรมที่จะมา</p>
-              </button>
-            </div>
-          </div>
-
-          {/* Recent Activity */}
-          <div>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-lg">กิจกรรมล่าสุด</h3>
-              <button onClick={() => navigate("/messages")} className="text-sm font-semibold text-accent hover:opacity-75 transition flex items-center gap-1">
-                ดูทั้งหมด <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="space-y-3">
-              {recentActivity.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.title} className="info-card w-full rounded-xl p-4 flex items-center gap-4 hover:shadow-lg transition-all duration-300 group hover:-translate-y-0.5">
-                    <div className={`w-12 h-12 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform ${item.bgClass}`}>
-                      <Icon className={`w-5 h-5 ${item.colorClass}`} />
-                    </div>
-                    <div className="flex-1 min-w-0 text-left">
-                      <p className="text-sm font-semibold truncate">{item.title}</p>
-                      <p className="text-xs mt-1 text-muted">{item.desc}</p>
-                    </div>
-                    <span className="text-xs font-semibold text-muted flex-shrink-0">{item.time}</span>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+    <div className="min-h-screen flex items-center justify-center px-4 py-10 bg-gradient-to-br from-accent/10 via-purple-100/10 to-blue-100/10">
+      <div className="w-full max-w-xl mx-auto bg-white/90 rounded-3xl shadow-2xl border border-gray-100 px-8 py-12 flex flex-col items-center">
+        <img
+          src={APP_CONFIG.logoUrl}
+          alt="School Logo"
+          className="w-24 h-24 mb-4 drop-shadow-lg rounded-full bg-white p-2 border"
+        />
+        <h1 className="text-3xl md:text-4xl font-extrabold mb-2 tracking-tight drop-shadow-sm text-center text-accent">
+          {APP_CONFIG.schoolName || "SchoolApp"}
+        </h1>
+        <p className="text-base font-medium mb-1 text-center text-purple-500">
+          {APP_CONFIG.schoolDesc || "ระบบบริหารจัดการโรงเรียนออนไลน์"}
+        </p>
+        <p className="text-sm font-semibold text-center mb-4 text-accent">
+          "เชื่อมต่อทุกคนในโรงเรียน สะดวก รวดเร็ว ปลอดภัย"
+        </p>
+        <ul className="mb-6 text-gray-700 text-sm list-disc list-inside text-left max-w-xs mx-auto">
+          <li>แจ้งข่าวสารและประกาศสำคัญแบบเรียลไทม์</li>
+          <li>ตารางเรียน ตารางสอน และปฏิทินกิจกรรม</li>
+          <li>ส่งข้อความระหว่างครู นักเรียน ผู้ปกครอง</li>
+          <li>ติดตามผลการเรียนและพฤติกรรม</li>
+          <li>เข้าถึงข้อมูลโรงเรียนได้ทุกที่ ทุกเวลา</li>
+        </ul>
+        <div className="w-full flex flex-col items-center mt-8">
+          <GoogleLoginButton onClick={handleGoogleLogin} />
+          {loading && <div className="mt-3 text-accent">กำลังเข้าสู่ระบบ...</div>}
+        </div>
+        <div className="mt-10 w-full max-w-lg">
+          <h2 className="text-lg font-bold mb-2 text-accent">วิธีใช้งาน</h2>
+          <ol className="list-decimal list-inside text-gray-700 text-sm space-y-1">
+            <li>กดปุ่ม "Sign in with Google" เพื่อเข้าสู่ระบบ</li>
+            <li>หากยังไม่เคยลงทะเบียน จะมีขั้นตอนเลือกบทบาทและกรอกข้อมูล</li>
+            <li>หลังจากเข้าสู่ระบบ จะเข้าสู่แดชบอร์ดของแต่ละบทบาท</li>
+          </ol>
+          <h2 className="text-lg font-bold mt-6 mb-2 text-accent">คู่มือการใช้งาน</h2>
+          <ul className="list-disc list-inside text-gray-700 text-sm space-y-1">
+            <li>ดูประกาศ ข่าวสาร และกิจกรรมต่าง ๆ ได้จากหน้าแรก</li>
+            <li>เข้าถึงแอปต่าง ๆ เช่น ตารางเรียน ปฏิทิน ผลการเรียน ฯลฯ ผ่านเมนู</li>
+            <li>เปลี่ยนบทบาท/ตั้งค่าบัญชีได้ที่เมนูโปรไฟล์</li>
+          </ul>
         </div>
       </div>
     </div>

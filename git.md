@@ -1,5 +1,5 @@
 git add .
-git commit -m "gh page web"
+git commit -m "carousel slider"
 git push -u origin main
 
 ืnpm run dev

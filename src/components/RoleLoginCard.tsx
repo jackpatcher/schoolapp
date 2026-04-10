@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { APP_CONFIG } from "@/config";
+import { APP_CONFIG } from "@/data/config";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";

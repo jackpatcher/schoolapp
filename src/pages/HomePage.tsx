@@ -1,9 +1,73 @@
-
-
-import { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import DevLogCards from "@/components/DevLogCards";
+import type { DevLogEntry } from "@/data/devlog";
+import { devLogEntries } from "@/data/devlog";
+import useEmblaCarousel from "embla-carousel-react";
+
 import { GoogleLoginButton } from "@/components/GoogleLoginButton";
-import { APP_CONFIG } from "@/config";
+
+function CarouselDots({ count, current, accent, onSelect }: { count: number; current: number; accent: string; onSelect: (i: number) => void }) {
+  return (
+    <div className="flex justify-center gap-3 mt-6">
+      {Array.from({ length: count }).map((_, i) => (
+        <button
+          key={i}
+          style={
+            i === current
+              ? { backgroundColor: accent, width: 12, height: 12, transform: "scale(1.1)" }
+              : { backgroundColor: "#ffffff", border: "1px solid #cbd5e1", opacity: 0.7, width: 12, height: 12 }
+          }
+          className="rounded-full transition-all"
+          aria-label={`ไปที่สไลด์ ${i + 1}`}
+          onClick={() => onSelect(i)}
+        />
+      ))}
+    </div>
+  );
+}
+
+function DevLogSection() {
+  const entries = useMemo<DevLogEntry[]>(() => devLogEntries, []);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ align: "start", loop: true });
+  const [selectedIdx, setSelectedIdx] = useState(0);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onSelect = () => setSelectedIdx(emblaApi.selectedScrollSnap());
+    emblaApi.on("select", onSelect);
+    onSelect();
+    return () => {
+      if (emblaApi) emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi || entries.length <= 1) return;
+    const interval = window.setInterval(() => {
+      const nextIndex = (emblaApi.selectedScrollSnap() + 1) % entries.length;
+      emblaApi.scrollTo(nextIndex);
+    }, 4500);
+    return () => window.clearInterval(interval);
+  }, [emblaApi, entries.length]);
+
+  return (
+    <div>
+      <DevLogCards entries={entries} emblaRef={emblaRef} />
+      <div className="mt-4">
+        <CarouselDots
+          count={entries.length}
+          current={selectedIdx}
+          accent={accent}
+          onSelect={(i) => {
+            emblaApi?.scrollTo(i);
+            setSelectedIdx(i);
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+import { APP_CONFIG } from "@/data/config";
 const { primary, secondary, accent, pale } = APP_CONFIG.schoolColors;
 import { googleLogin } from "@/lib/googleAuth";
 import { Smartphone, RefreshCw, CreditCard, BarChart2, Repeat, FolderSearch } from "lucide-react";
@@ -182,6 +246,8 @@ const HomePage = () => {
         </div>
       </section>
 
+      
+
       {/* Features Section */}
       <section className="w-full relative min-h-screen flex flex-col justify-center items-center py-16 px-4 overflow-x-clip"
         style={{ background: pale }}>
@@ -253,7 +319,8 @@ const HomePage = () => {
       {/* Dev Log Section */}
       <section className="w-full relative flex flex-col justify-center items-center py-16 px-4 bg-white border-t border-border">
         <div className="w-full max-w-4xl mx-auto">
-          <DevLogCards />
+          {/* DevLog carousel controlled from HomePage */}
+          <DevLogSection />
         </div>
       </section>
 
